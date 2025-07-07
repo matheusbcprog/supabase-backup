@@ -6,11 +6,9 @@ on:
     branches: [main, dev]
   workflow_dispatch:
   schedule:
-    - cron: "0 0 * * *" # Runs every day at midnight
-
+    - cron: "0 0 * * *" # Runs every day at midnight (corrigido o cron)
 env:
   BACKUP_ENABLED: true
-
 jobs:
   run_db_backup:
     runs-on: ubuntu-latest
@@ -18,8 +16,7 @@ jobs:
       contents: write
     env:
       SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
-      BACKUP_ENABLED: ${{ vars.BACKUP_ENABLED || 'true' }} # Repository variable (true or false)
-    
+      BACKUP_ENABLED: ${{ vars.BACKUP_ENABLED }} # Repository variable (true or false)
     steps:
       - name: Check if backups are enabled
         run: |
@@ -27,74 +24,51 @@ jobs:
             echo "Backups are disabled. Exiting workflow."
             exit 0
           fi
-          
+      
       - name: Checkout repository
         if: env.BACKUP_ENABLED == 'true'
         uses: actions/checkout@v4
-        
-      - name: Setup Supabase CLI
+      
+      # Instalar PostgreSQL 17 client tools diretamente
+      - name: Install PostgreSQL 17 client
         if: env.BACKUP_ENABLED == 'true'
-        uses: supabase/setup-cli@v1
-        with:
-          version: latest
-          
-      - name: Create backup directory
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget ca-certificates
+          wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+          echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client-17
+      
+      - name: Create timestamp folder
         if: env.BACKUP_ENABLED == 'true'
         run: mkdir -p prisma/backups
-        
-      - name: Generate timestamp
-        if: env.BACKUP_ENABLED == 'true'
-        id: timestamp
-        run: echo "TIMESTAMP=$(date +'%Y%m%d_%H%M%S')" >> $GITHUB_OUTPUT
-        
+      
       - name: Backup roles
         if: env.BACKUP_ENABLED == 'true'
         run: |
-          supabase db dump --db-url "$SUPABASE_DB_URL" \
-            -f prisma/backups/roles_${{ steps.timestamp.outputs.TIMESTAMP }}.sql \
-            --role-only
-            
+          /usr/lib/postgresql/17/bin/pg_dumpall --roles-only \
+            --dbname="$SUPABASE_DB_URL" \
+            --file=prisma/backups/roles.sql
+      
       - name: Backup schema
         if: env.BACKUP_ENABLED == 'true'
         run: |
-          supabase db dump --db-url "$SUPABASE_DB_URL" \
-            -f prisma/backups/schema_${{ steps.timestamp.outputs.TIMESTAMP }}.sql \
-            --schema-only
-            
+          /usr/lib/postgresql/17/bin/pg_dump \
+            --dbname="$SUPABASE_DB_URL" \
+            --schema-only \
+            --file=prisma/backups/schema.sql
+      
       - name: Backup data
         if: env.BACKUP_ENABLED == 'true'
         run: |
-          supabase db dump --db-url "$SUPABASE_DB_URL" \
-            -f prisma/backups/data_${{ steps.timestamp.outputs.TIMESTAMP }}.sql \
-            --data-only --use-copy
-            
-      - name: Create backup summary
-        if: env.BACKUP_ENABLED == 'true'
-        run: |
-          echo "# Backup Summary - ${{ steps.timestamp.outputs.TIMESTAMP }}" > prisma/backups/backup_summary_${{ steps.timestamp.outputs.TIMESTAMP }}.md
-          echo "- **Date:** $(date)" >> prisma/backups/backup_summary_${{ steps.timestamp.outputs.TIMESTAMP }}.md
-          echo "- **Roles backup:** roles_${{ steps.timestamp.outputs.TIMESTAMP }}.sql" >> prisma/backups/backup_summary_${{ steps.timestamp.outputs.TIMESTAMP }}.md
-          echo "- **Schema backup:** schema_${{ steps.timestamp.outputs.TIMESTAMP }}.sql" >> prisma/backups/backup_summary_${{ steps.timestamp.outputs.TIMESTAMP }}.md
-          echo "- **Data backup:** data_${{ steps.timestamp.outputs.TIMESTAMP }}.sql" >> prisma/backups/backup_summary_${{ steps.timestamp.outputs.TIMESTAMP }}.md
-          echo "- **Workflow:** ${{ github.workflow }}" >> prisma/backups/backup_summary_${{ steps.timestamp.outputs.TIMESTAMP }}.md
-          echo "- **Run ID:** ${{ github.run_id }}" >> prisma/backups/backup_summary_${{ steps.timestamp.outputs.TIMESTAMP }}.md
-          
+          /usr/lib/postgresql/17/bin/pg_dump \
+            --dbname="$SUPABASE_DB_URL" \
+            --data-only \
+            --file=prisma/backups/data.sql
+      
       - name: Commit backups
         if: env.BACKUP_ENABLED == 'true'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "feat: Supabase backup - ${{ steps.timestamp.outputs.TIMESTAMP }}"
-          file_pattern: prisma/backups/*
-          
-      - name: Clean old backups (keep last 7 days)
-        if: env.BACKUP_ENABLED == 'true'
-        run: |
-          find prisma/backups -name "*.sql" -type f -mtime +7 -delete || true
-          find prisma/backups -name "*.md" -type f -mtime +7 -delete || true
-          
-      - name: Commit cleanup
-        if: env.BACKUP_ENABLED == 'true'
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "chore: cleanup old backups"
-          file_pattern: prisma/backups/*
+          commit_message: "Supabase backup - $(date +'%Y-%m-%d %H:%M:%S')"
