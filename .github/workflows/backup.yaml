@@ -1,5 +1,4 @@
 name: supabase-backup
-
 on:
   push:
     branches: [main, dev]
@@ -7,11 +6,9 @@ on:
     branches: [main, dev]
   workflow_dispatch:
   schedule:
-    - cron: "0 0 * * *" # Runs every day at midnight
-
+    - cron: "0 0 * * *" # Runs every day at midnight (corrigido o cron)
 env:
   BACKUP_ENABLED: true
-
 jobs:
   run_db_backup:
     runs-on: ubuntu-latest
@@ -27,35 +24,51 @@ jobs:
             echo "Backups are disabled. Exiting workflow."
             exit 0
           fi
-
+      
       - name: Checkout repository
         if: env.BACKUP_ENABLED == 'true'
-        uses: actions/checkout@v3
-
-      - name: Setup Supabase CLI
+        uses: actions/checkout@v4
+      
+      # Instalar PostgreSQL 17 client tools diretamente
+      - name: Install PostgreSQL 17 client
         if: env.BACKUP_ENABLED == 'true'
-        uses: supabase/setup-cli@v1
-        with:
-          version: latest
-
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget ca-certificates
+          wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+          echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client-17
+      
       - name: Create timestamp folder
         if: env.BACKUP_ENABLED == 'true'
         run: mkdir -p prisma/backups
-
+      
       - name: Backup roles
         if: env.BACKUP_ENABLED == 'true'
-        run: supabase db dump --db-url "$SUPABASE_DB_URL" -f prisma/backups/roles.sql --role-only
-
+        run: |
+          /usr/lib/postgresql/17/bin/pg_dumpall --roles-only \
+            --dbname="$SUPABASE_DB_URL" \
+            --file=prisma/backups/roles.sql
+      
       - name: Backup schema
         if: env.BACKUP_ENABLED == 'true'
-        run: supabase db dump --db-url "$SUPABASE_DB_URL" -f prisma/backups/schema.sql
-
+        run: |
+          /usr/lib/postgresql/17/bin/pg_dump \
+            --dbname="$SUPABASE_DB_URL" \
+            --schema-only \
+            --file=prisma/backups/schema.sql
+      
       - name: Backup data
         if: env.BACKUP_ENABLED == 'true'
-        run: supabase db dump --db-url "$SUPABASE_DB_URL" -f prisma/backups/data.sql --data-only --use-copy
-
+        run: |
+          /usr/lib/postgresql/17/bin/pg_dump \
+            --dbname="$SUPABASE_DB_URL" \
+            --data-only \
+            --file=prisma/backups/data.sql
+      
       - name: Commit backups
         if: env.BACKUP_ENABLED == 'true'
-        uses: stefanzweifel/git-auto-commit-action@v4
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: Supabase backup
+          commit_message: "Supabase backup - $(date +'%Y-%m-%d %H:%M:%S')"
