@@ -1019,6 +1019,9 @@ COPY auth.audit_log_entries (instance_id, id, payload, created_at, ip_address) F
 00000000-0000-0000-0000-000000000000	4874faf0-6f51-4892-a717-83f17e6bdf20	{"action":"token_refreshed","actor_id":"f56e6907-96b8-4726-9c93-4039b2683ba9","actor_username":"matheusprograming@gmail.com","actor_via_sso":false,"log_type":"token"}	2025-07-07 10:42:40.582933+00	
 00000000-0000-0000-0000-000000000000	95de0a7a-124b-4e63-b82b-1d4864da30ec	{"action":"token_revoked","actor_id":"f56e6907-96b8-4726-9c93-4039b2683ba9","actor_username":"matheusprograming@gmail.com","actor_via_sso":false,"log_type":"token"}	2025-07-07 10:42:40.588176+00	
 00000000-0000-0000-0000-000000000000	7085de6a-a39e-4d85-bc1e-4fd80217f482	{"action":"login","actor_id":"f56e6907-96b8-4726-9c93-4039b2683ba9","actor_username":"matheusprograming@gmail.com","actor_via_sso":false,"log_type":"account","traits":{"provider":"email"}}	2025-07-07 11:39:30.896584+00	
+00000000-0000-0000-0000-000000000000	5bd74075-9274-4e34-801c-528748c7e0cc	{"action":"token_refreshed","actor_id":"f56e6907-96b8-4726-9c93-4039b2683ba9","actor_username":"matheusprograming@gmail.com","actor_via_sso":false,"log_type":"token"}	2025-07-07 13:00:15.212972+00	
+00000000-0000-0000-0000-000000000000	5a7ecae8-7673-4c33-8fb3-ad2979b68bcc	{"action":"token_revoked","actor_id":"f56e6907-96b8-4726-9c93-4039b2683ba9","actor_username":"matheusprograming@gmail.com","actor_via_sso":false,"log_type":"token"}	2025-07-07 13:00:15.215577+00	
+00000000-0000-0000-0000-000000000000	cf62de16-9164-4646-8acd-e9c2e8499dc4	{"action":"logout","actor_id":"f56e6907-96b8-4726-9c93-4039b2683ba9","actor_username":"matheusprograming@gmail.com","actor_via_sso":false,"log_type":"account"}	2025-07-07 13:00:21.057124+00	
 \.
 
 
@@ -1037,7 +1040,7 @@ b4482e86-a64d-4fb0-8c11-14f24fb9af36	43a770f4-dc2e-4f87-8f96-655eb84db80f	785db7
 --
 
 COPY auth.users (instance_id, id, aud, role, email, encrypted_password, email_confirmed_at, invited_at, confirmation_token, confirmation_sent_at, recovery_token, recovery_sent_at, email_change_token_new, email_change, email_change_sent_at, last_sign_in_at, raw_app_meta_data, raw_user_meta_data, is_super_admin, created_at, updated_at, phone, phone_confirmed_at, phone_change, phone_change_token, phone_change_sent_at, email_change_token_current, email_change_confirm_status, banned_until, reauthentication_token, reauthentication_sent_at, is_sso_user, deleted_at, is_anonymous) FROM stdin;
-00000000-0000-0000-0000-000000000000	f56e6907-96b8-4726-9c93-4039b2683ba9	authenticated	authenticated	matheusprograming@gmail.com	$2a$10$qLqY/pxDUVKEmuAaihDgVOX/pgzimZA.qOP1KglYTU5jgmIyIcI/6	2025-04-18 03:15:09.953304+00	\N		\N		\N			\N	2025-07-07 11:39:30.910334+00	{"provider": "email", "providers": ["email"]}	{"email_verified": true}	\N	2025-04-18 03:15:09.920065+00	2025-07-07 11:39:30.934812+00	\N	\N			\N		0	\N		\N	f	\N	f
+00000000-0000-0000-0000-000000000000	f56e6907-96b8-4726-9c93-4039b2683ba9	authenticated	authenticated	matheusprograming@gmail.com	$2a$10$qLqY/pxDUVKEmuAaihDgVOX/pgzimZA.qOP1KglYTU5jgmIyIcI/6	2025-04-18 03:15:09.953304+00	\N		\N		\N			\N	2025-07-07 11:39:30.910334+00	{"provider": "email", "providers": ["email"]}	{"email_verified": true}	\N	2025-04-18 03:15:09.920065+00	2025-07-07 13:00:15.222869+00	\N	\N			\N		0	\N		\N	f	\N	f
 \.
 
 
@@ -1083,8 +1086,6 @@ f3fb6c5b-5ab2-43d0-b644-5d6dd0075a78	11c19aed-2412-4b94-b3c9-16f4ea60d338	2025-0
 24b04284-7c78-457e-964d-14ede683ff69	11c19aed-2412-4b94-b3c9-16f4ea60d338	2025-06-02 13:14:18.853394+00	2025-06-02 13:14:18.853394+00	\N	aal1	\N	\N	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36	170.83.203.213	\N
 1a648470-b68e-4152-8694-a1e30a4e9a51	11c19aed-2412-4b94-b3c9-16f4ea60d338	2025-06-02 02:26:50.135737+00	2025-06-02 17:15:21.257778+00	\N	aal1	\N	2025-06-02 17:15:21.256611	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36	170.83.203.213	\N
 4ac0838e-0076-45ca-92a9-860ffaf66738	11c19aed-2412-4b94-b3c9-16f4ea60d338	2025-06-02 13:44:59.765993+00	2025-06-02 17:15:42.36231+00	\N	aal1	\N	2025-06-02 17:15:42.3611	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36	170.83.203.213	\N
-7c328d45-8663-4886-9471-291739b7f9fa	f56e6907-96b8-4726-9c93-4039b2683ba9	2025-07-07 02:58:54.322243+00	2025-07-07 10:42:40.598216+00	\N	aal1	\N	2025-07-07 10:42:40.598143	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36	191.242.51.191	\N
-9f894366-c2d6-42a5-bfb4-a8aae0c6f689	f56e6907-96b8-4726-9c93-4039b2683ba9	2025-07-07 11:39:30.911074+00	2025-07-07 11:39:30.911074+00	\N	aal1	\N	\N	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36	191.242.51.191	\N
 \.
 
 
@@ -1093,8 +1094,6 @@ f3fb6c5b-5ab2-43d0-b644-5d6dd0075a78	11c19aed-2412-4b94-b3c9-16f4ea60d338	2025-0
 --
 
 COPY auth.mfa_amr_claims (session_id, created_at, updated_at, authentication_method, id) FROM stdin;
-7c328d45-8663-4886-9471-291739b7f9fa	2025-07-07 02:58:54.331574+00	2025-07-07 02:58:54.331574+00	password	a08ee28a-1165-420e-8007-df5937ca34d4
-9f894366-c2d6-42a5-bfb4-a8aae0c6f689	2025-07-07 11:39:30.936115+00	2025-07-07 11:39:30.936115+00	password	825a5ad7-098b-44e3-a526-514da17f3da2
 53e6e2b4-6f99-43c8-a5e5-4ba4fa102b5b	2025-06-02 01:14:35.947655+00	2025-06-02 01:14:35.947655+00	password	1f4b521c-568b-4db3-8cc5-a0a2f008bb2e
 1a648470-b68e-4152-8694-a1e30a4e9a51	2025-06-02 02:26:50.18048+00	2025-06-02 02:26:50.18048+00	password	d41303eb-5bca-44af-be4a-ef3282aba92f
 90c83ae7-8a06-4780-b7e5-971ba7029b38	2025-06-02 02:28:02.014569+00	2025-06-02 02:28:02.014569+00	password	de4cf6b7-fd94-4e86-92d6-826bc69eb569
@@ -1173,9 +1172,6 @@ COPY auth.refresh_tokens (instance_id, id, token, user_id, revoked, created_at, 
 00000000-0000-0000-0000-000000000000	213	5pjfdvmh35tu	11c19aed-2412-4b94-b3c9-16f4ea60d338	f	2025-06-02 17:15:21.226359+00	2025-06-02 17:15:21.226359+00	kmt4soedgfkz	1a648470-b68e-4152-8694-a1e30a4e9a51
 00000000-0000-0000-0000-000000000000	212	5updz3he2xe2	11c19aed-2412-4b94-b3c9-16f4ea60d338	t	2025-06-02 16:14:55.916372+00	2025-06-02 17:15:42.348543+00	b3njpazyx2no	4ac0838e-0076-45ca-92a9-860ffaf66738
 00000000-0000-0000-0000-000000000000	214	m4qzaatu7epf	11c19aed-2412-4b94-b3c9-16f4ea60d338	f	2025-06-02 17:15:42.350535+00	2025-06-02 17:15:42.350535+00	5updz3he2xe2	4ac0838e-0076-45ca-92a9-860ffaf66738
-00000000-0000-0000-0000-000000000000	356	uvto7v5p3qb6	f56e6907-96b8-4726-9c93-4039b2683ba9	t	2025-07-07 02:58:54.325153+00	2025-07-07 10:42:40.589313+00	\N	7c328d45-8663-4886-9471-291739b7f9fa
-00000000-0000-0000-0000-000000000000	357	zv4ezslvinr5	f56e6907-96b8-4726-9c93-4039b2683ba9	f	2025-07-07 10:42:40.594317+00	2025-07-07 10:42:40.594317+00	uvto7v5p3qb6	7c328d45-8663-4886-9471-291739b7f9fa
-00000000-0000-0000-0000-000000000000	358	jltpkqwcqd2s	f56e6907-96b8-4726-9c93-4039b2683ba9	f	2025-07-07 11:39:30.921195+00	2025-07-07 11:39:30.921195+00	\N	9f894366-c2d6-42a5-bfb4-a8aae0c6f689
 \.
 
 
@@ -1976,7 +1972,7 @@ COPY vault.secrets (id, name, description, secret, key_id, nonce, created_at, up
 -- Name: refresh_tokens_id_seq; Type: SEQUENCE SET; Schema: auth; Owner: supabase_auth_admin
 --
 
-SELECT pg_catalog.setval('auth.refresh_tokens_id_seq', 358, true);
+SELECT pg_catalog.setval('auth.refresh_tokens_id_seq', 359, true);
 
 
 --
