@@ -2,8 +2,10 @@
 -- PostgreSQL database dump
 --
 
+\restrict jP9JOEsWtAqNVJ5iAtaBcxAX7fPNW90Xt1rBH8KY2eSwuaqjY97sZxMKQK5aoyT
+
 -- Dumped from database version 15.8
--- Dumped by pg_dump version 17.5 (Ubuntu 17.5-1.pgdg24.04+1)
+-- Dumped by pg_dump version 17.6 (Ubuntu 17.6-1.pgdg24.04+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -7584,4 +7586,6 @@ ALTER EVENT TRIGGER pgrst_drop_watch OWNER TO supabase_admin;
 --
 -- PostgreSQL database dump complete
 --
+
+\unrestrict jP9JOEsWtAqNVJ5iAtaBcxAX7fPNW90Xt1rBH8KY2eSwuaqjY97sZxMKQK5aoyT
 

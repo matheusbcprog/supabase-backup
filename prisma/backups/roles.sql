@@ -2,6 +2,8 @@
 -- PostgreSQL database cluster dump
 --
 
+\restrict 9tMPYlvDxcPPSzMuvIHQpP7Ex09fxiSCVzJUGpyvKwbBB0zdhH32DLUSp5RapGF
+
 SET default_transaction_read_only = off;
 
 SET client_encoding = 'UTF8';
@@ -123,6 +125,8 @@ GRANT supabase_realtime_admin TO postgres;
 
 
 
+
+\unrestrict 9tMPYlvDxcPPSzMuvIHQpP7Ex09fxiSCVzJUGpyvKwbBB0zdhH32DLUSp5RapGF
 
 --
 -- PostgreSQL database cluster dump complete
