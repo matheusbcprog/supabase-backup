@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict HiL8bZTaquiXQnpgidn8KBcM0z3wh8xCV1dHACDxcHsNLbK2HxSFtZhTMN9tekn
+\restrict su5j6NgTXRYldfgvJrFcZkW42ploQtpiTLoBosoWt0dPXkfZSeBhTk16JmHgEBH
 
 -- Dumped from database version 15.8
 -- Dumped by pg_dump version 17.6 (Ubuntu 17.6-1.pgdg24.04+1)
@@ -1181,7 +1181,7 @@ COPY auth.refresh_tokens (instance_id, id, token, user_id, revoked, created_at, 
 -- Data for Name: sso_providers; Type: TABLE DATA; Schema: auth; Owner: supabase_auth_admin
 --
 
-COPY auth.sso_providers (id, resource_id, created_at, updated_at) FROM stdin;
+COPY auth.sso_providers (id, resource_id, created_at, updated_at, disabled) FROM stdin;
 \.
 
 
@@ -1267,6 +1267,7 @@ COPY auth.schema_migrations (version) FROM stdin;
 20240802193726
 20240806073726
 20241009103726
+20250717082212
 \.
 
 
@@ -2051,5 +2052,5 @@ SELECT pg_catalog.setval('realtime.subscription_id_seq', 814, true);
 -- PostgreSQL database dump complete
 --
 
-\unrestrict HiL8bZTaquiXQnpgidn8KBcM0z3wh8xCV1dHACDxcHsNLbK2HxSFtZhTMN9tekn
+\unrestrict su5j6NgTXRYldfgvJrFcZkW42ploQtpiTLoBosoWt0dPXkfZSeBhTk16JmHgEBH
 

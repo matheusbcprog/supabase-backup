@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict CqX3ZeYEfU3ExkLCaZcBs0P60PsGLKzn276Wn4tmYJevSNhwyyCUzHNv4N4rZeb
+\restrict eD9Mq5KbQpWgK6fIiOsL1nzMLHXBEPrIMg0BZZhTEL4CdEt55khI02B6weQQ5Jw
 
 -- Dumped from database version 15.8
 -- Dumped by pg_dump version 17.6 (Ubuntu 17.6-1.pgdg24.04+1)
@@ -2225,6 +2225,7 @@ CREATE TABLE auth.sso_providers (
     resource_id text,
     created_at timestamp with time zone,
     updated_at timestamp with time zone,
+    disabled boolean,
     CONSTRAINT "resource_id not empty" CHECK (((resource_id = NULL::text) OR (char_length(resource_id) > 0)))
 );
 
@@ -3890,6 +3891,13 @@ CREATE INDEX sso_domains_sso_provider_id_idx ON auth.sso_domains USING btree (ss
 --
 
 CREATE UNIQUE INDEX sso_providers_resource_id_idx ON auth.sso_providers USING btree (lower(resource_id));
+
+
+--
+-- Name: sso_providers_resource_id_pattern_idx; Type: INDEX; Schema: auth; Owner: supabase_auth_admin
+--
+
+CREATE INDEX sso_providers_resource_id_pattern_idx ON auth.sso_providers USING btree (resource_id text_pattern_ops);
 
 
 --
@@ -7587,5 +7595,5 @@ ALTER EVENT TRIGGER pgrst_drop_watch OWNER TO supabase_admin;
 -- PostgreSQL database dump complete
 --
 
-\unrestrict CqX3ZeYEfU3ExkLCaZcBs0P60PsGLKzn276Wn4tmYJevSNhwyyCUzHNv4N4rZeb
+\unrestrict eD9Mq5KbQpWgK6fIiOsL1nzMLHXBEPrIMg0BZZhTEL4CdEt55khI02B6weQQ5Jw
 
