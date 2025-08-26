@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict JuEngBS17Lw3Cy71d74TAGlKHZ9e0FqpGxAoXs6E1RVeCMrqeGNZJMxXhEOyQdF
+\restrict zaNb9BMBlZJTweBcx8hNUQmS0zUieeryc9YCJxv2P8sEtK5oubEJYzrl8icUlQf
 
 -- Dumped from database version 15.8
 -- Dumped by pg_dump version 17.6 (Ubuntu 17.6-1.pgdg24.04+1)
@@ -1404,16 +1404,7 @@ BEGIN
   EXCEPTION
     WHEN OTHERS THEN
       -- Capture and notify the error
-      PERFORM pg_notify(
-          'realtime:system',
-          jsonb_build_object(
-              'error', SQLERRM,
-              'function', 'realtime.send',
-              'event', event,
-              'topic', topic,
-              'private', private
-          )::text
-      );
+      RAISE WARNING 'ErrorSendingBroadcastMessage: %', SQLERRM;
   END;
 END;
 $$;
@@ -7595,5 +7586,5 @@ ALTER EVENT TRIGGER pgrst_drop_watch OWNER TO supabase_admin;
 -- PostgreSQL database dump complete
 --
 
-\unrestrict JuEngBS17Lw3Cy71d74TAGlKHZ9e0FqpGxAoXs6E1RVeCMrqeGNZJMxXhEOyQdF
+\unrestrict zaNb9BMBlZJTweBcx8hNUQmS0zUieeryc9YCJxv2P8sEtK5oubEJYzrl8icUlQf
 
