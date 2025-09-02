@@ -2,7 +2,7 @@
 -- PostgreSQL database cluster dump
 --
 
-\restrict jtPMZXcrrzWuNqRKx6mvLR9uWSp1ggNJe4lH0mEd4lIbXuZ8TbfRRpyqw0WHHOr
+\restrict YYGZmRJo4kIY3Jn6lrU9TP5F4bWURLsoGTV7lzeb25Rnma0HhKECZ6Bygy8aURG
 
 SET default_transaction_read_only = off;
 
@@ -126,7 +126,7 @@ GRANT supabase_realtime_admin TO postgres;
 
 
 
-\unrestrict jtPMZXcrrzWuNqRKx6mvLR9uWSp1ggNJe4lH0mEd4lIbXuZ8TbfRRpyqw0WHHOr
+\unrestrict YYGZmRJo4kIY3Jn6lrU9TP5F4bWURLsoGTV7lzeb25Rnma0HhKECZ6Bygy8aURG
 
 --
 -- PostgreSQL database cluster dump complete
