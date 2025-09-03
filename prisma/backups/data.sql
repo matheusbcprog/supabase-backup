@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict 1xyMedhvnD3n6y1W56jvfq7QmwFJnBQ66a9SBNhsyh015aTzhmAnAGkD1nMew8K
+\restrict eSHTKI6GvmhQKBju9VfoNfsRZMTuJYsV8AEDjgdU2wwkf2RtvXDY6I7SEAw69ZJ
 
 -- Dumped from database version 15.8
 -- Dumped by pg_dump version 17.6 (Ubuntu 17.6-1.pgdg24.04+1)
@@ -1131,6 +1131,14 @@ COPY auth.mfa_challenges (id, factor_id, created_at, verified_at, ip_address, ot
 
 
 --
+-- Data for Name: oauth_clients; Type: TABLE DATA; Schema: auth; Owner: supabase_auth_admin
+--
+
+COPY auth.oauth_clients (id, client_id, client_secret_hash, registration_type, redirect_uris, grant_types, client_name, client_uri, logo_uri, created_at, updated_at, deleted_at) FROM stdin;
+\.
+
+
+--
 -- Data for Name: one_time_tokens; Type: TABLE DATA; Schema: auth; Owner: supabase_auth_admin
 --
 
@@ -1268,6 +1276,7 @@ COPY auth.schema_migrations (version) FROM stdin;
 20240806073726
 20241009103726
 20250717082212
+20250731150234
 \.
 
 
@@ -2053,5 +2062,5 @@ SELECT pg_catalog.setval('realtime.subscription_id_seq', 814, true);
 -- PostgreSQL database dump complete
 --
 
-\unrestrict 1xyMedhvnD3n6y1W56jvfq7QmwFJnBQ66a9SBNhsyh015aTzhmAnAGkD1nMew8K
+\unrestrict eSHTKI6GvmhQKBju9VfoNfsRZMTuJYsV8AEDjgdU2wwkf2RtvXDY6I7SEAw69ZJ
 

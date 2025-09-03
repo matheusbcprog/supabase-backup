@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict hMD1Ho6b3b6duJOJavdill216g488niy2YiOvxx8Xibto29Q97jMtJ8VhMZtJOL
+\restrict UQWcBflVmmg6RPzSmf35DtqdaA8WiIMjL1za3KbQRwnJIQXLpdelrMUYUXk8abE
 
 -- Dumped from database version 15.8
 -- Dumped by pg_dump version 17.6 (Ubuntu 17.6-1.pgdg24.04+1)
@@ -270,6 +270,18 @@ CREATE TYPE auth.factor_type AS ENUM (
 
 
 ALTER TYPE auth.factor_type OWNER TO supabase_auth_admin;
+
+--
+-- Name: oauth_registration_type; Type: TYPE; Schema: auth; Owner: supabase_auth_admin
+--
+
+CREATE TYPE auth.oauth_registration_type AS ENUM (
+    'dynamic',
+    'manual'
+);
+
+
+ALTER TYPE auth.oauth_registration_type OWNER TO supabase_auth_admin;
 
 --
 -- Name: one_time_token_type; Type: TYPE; Schema: auth; Owner: supabase_auth_admin
@@ -2012,6 +2024,31 @@ COMMENT ON TABLE auth.mfa_factors IS 'auth: stores metadata about factors';
 
 
 --
+-- Name: oauth_clients; Type: TABLE; Schema: auth; Owner: supabase_auth_admin
+--
+
+CREATE TABLE auth.oauth_clients (
+    id uuid NOT NULL,
+    client_id text NOT NULL,
+    client_secret_hash text NOT NULL,
+    registration_type auth.oauth_registration_type NOT NULL,
+    redirect_uris text NOT NULL,
+    grant_types text NOT NULL,
+    client_name text,
+    client_uri text,
+    logo_uri text,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    deleted_at timestamp with time zone,
+    CONSTRAINT oauth_clients_client_name_length CHECK ((char_length(client_name) <= 1024)),
+    CONSTRAINT oauth_clients_client_uri_length CHECK ((char_length(client_uri) <= 2048)),
+    CONSTRAINT oauth_clients_logo_uri_length CHECK ((char_length(logo_uri) <= 2048))
+);
+
+
+ALTER TABLE auth.oauth_clients OWNER TO supabase_auth_admin;
+
+--
 -- Name: one_time_tokens; Type: TABLE; Schema: auth; Owner: supabase_auth_admin
 --
 
@@ -3270,6 +3307,22 @@ ALTER TABLE ONLY auth.mfa_factors
 
 
 --
+-- Name: oauth_clients oauth_clients_client_id_key; Type: CONSTRAINT; Schema: auth; Owner: supabase_auth_admin
+--
+
+ALTER TABLE ONLY auth.oauth_clients
+    ADD CONSTRAINT oauth_clients_client_id_key UNIQUE (client_id);
+
+
+--
+-- Name: oauth_clients oauth_clients_pkey; Type: CONSTRAINT; Schema: auth; Owner: supabase_auth_admin
+--
+
+ALTER TABLE ONLY auth.oauth_clients
+    ADD CONSTRAINT oauth_clients_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: one_time_tokens one_time_tokens_pkey; Type: CONSTRAINT; Schema: auth; Owner: supabase_auth_admin
 --
 
@@ -3749,6 +3802,20 @@ CREATE UNIQUE INDEX mfa_factors_user_friendly_name_unique ON auth.mfa_factors US
 --
 
 CREATE INDEX mfa_factors_user_id_idx ON auth.mfa_factors USING btree (user_id);
+
+
+--
+-- Name: oauth_clients_client_id_idx; Type: INDEX; Schema: auth; Owner: supabase_auth_admin
+--
+
+CREATE INDEX oauth_clients_client_id_idx ON auth.oauth_clients USING btree (client_id);
+
+
+--
+-- Name: oauth_clients_deleted_at_idx; Type: INDEX; Schema: auth; Owner: supabase_auth_admin
+--
+
+CREATE INDEX oauth_clients_deleted_at_idx ON auth.oauth_clients USING btree (deleted_at);
 
 
 --
@@ -6764,6 +6831,14 @@ GRANT SELECT,INSERT,REFERENCES,DELETE,TRIGGER,TRUNCATE,UPDATE ON TABLE auth.mfa_
 
 
 --
+-- Name: TABLE oauth_clients; Type: ACL; Schema: auth; Owner: supabase_auth_admin
+--
+
+GRANT SELECT,INSERT,REFERENCES,DELETE,TRIGGER,TRUNCATE,UPDATE ON TABLE auth.oauth_clients TO postgres;
+GRANT SELECT,INSERT,REFERENCES,DELETE,TRIGGER,TRUNCATE,UPDATE ON TABLE auth.oauth_clients TO dashboard_user;
+
+
+--
 -- Name: TABLE one_time_tokens; Type: ACL; Schema: auth; Owner: supabase_auth_admin
 --
 
@@ -7586,5 +7661,5 @@ ALTER EVENT TRIGGER pgrst_drop_watch OWNER TO supabase_admin;
 -- PostgreSQL database dump complete
 --
 
-\unrestrict hMD1Ho6b3b6duJOJavdill216g488niy2YiOvxx8Xibto29Q97jMtJ8VhMZtJOL
+\unrestrict UQWcBflVmmg6RPzSmf35DtqdaA8WiIMjL1za3KbQRwnJIQXLpdelrMUYUXk8abE
 
