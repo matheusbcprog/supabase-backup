@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict dgWtd1rsZ3HchJV4e6o4LHnHeOMxsHF4jdQxtKVKdntzzoMrqBZyHJwK2R7CBS3
+\restrict 4wZjS8Zz0CiD6SNPqmRacAKjpMykE6V4MOEED62UtYoxGQ85ouMmJtucoKkc1Ws
 
 -- Dumped from database version 15.8
 -- Dumped by pg_dump version 17.6 (Ubuntu 17.6-1.pgdg24.04+1)
@@ -4776,7 +4776,7 @@ GRANT ALL ON SCHEMA realtime TO supabase_realtime_admin;
 -- Name: SCHEMA storage; Type: ACL; Schema: -; Owner: supabase_admin
 --
 
-GRANT USAGE ON SCHEMA storage TO postgres;
+GRANT USAGE ON SCHEMA storage TO postgres WITH GRANT OPTION;
 GRANT USAGE ON SCHEMA storage TO anon;
 GRANT USAGE ON SCHEMA storage TO authenticated;
 GRANT USAGE ON SCHEMA storage TO service_role;
@@ -7290,7 +7290,7 @@ GRANT ALL ON SEQUENCE realtime.subscription_id_seq TO supabase_realtime_admin;
 GRANT SELECT,INSERT,REFERENCES,DELETE,TRIGGER,TRUNCATE,UPDATE ON TABLE storage.buckets TO anon;
 GRANT SELECT,INSERT,REFERENCES,DELETE,TRIGGER,TRUNCATE,UPDATE ON TABLE storage.buckets TO authenticated;
 GRANT SELECT,INSERT,REFERENCES,DELETE,TRIGGER,TRUNCATE,UPDATE ON TABLE storage.buckets TO service_role;
-GRANT SELECT,INSERT,REFERENCES,DELETE,TRIGGER,TRUNCATE,UPDATE ON TABLE storage.buckets TO postgres;
+GRANT SELECT,INSERT,REFERENCES,DELETE,TRIGGER,TRUNCATE,UPDATE ON TABLE storage.buckets TO postgres WITH GRANT OPTION;
 
 
 --
@@ -7300,7 +7300,7 @@ GRANT SELECT,INSERT,REFERENCES,DELETE,TRIGGER,TRUNCATE,UPDATE ON TABLE storage.b
 GRANT SELECT,INSERT,REFERENCES,DELETE,TRIGGER,TRUNCATE,UPDATE ON TABLE storage.objects TO anon;
 GRANT SELECT,INSERT,REFERENCES,DELETE,TRIGGER,TRUNCATE,UPDATE ON TABLE storage.objects TO authenticated;
 GRANT SELECT,INSERT,REFERENCES,DELETE,TRIGGER,TRUNCATE,UPDATE ON TABLE storage.objects TO service_role;
-GRANT SELECT,INSERT,REFERENCES,DELETE,TRIGGER,TRUNCATE,UPDATE ON TABLE storage.objects TO postgres;
+GRANT SELECT,INSERT,REFERENCES,DELETE,TRIGGER,TRUNCATE,UPDATE ON TABLE storage.objects TO postgres WITH GRANT OPTION;
 
 
 --
@@ -7661,5 +7661,5 @@ ALTER EVENT TRIGGER pgrst_drop_watch OWNER TO supabase_admin;
 -- PostgreSQL database dump complete
 --
 
-\unrestrict dgWtd1rsZ3HchJV4e6o4LHnHeOMxsHF4jdQxtKVKdntzzoMrqBZyHJwK2R7CBS3
+\unrestrict 4wZjS8Zz0CiD6SNPqmRacAKjpMykE6V4MOEED62UtYoxGQ85ouMmJtucoKkc1Ws
 
